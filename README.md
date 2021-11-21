@@ -1,2 +1,2 @@
-# WPL_boat_rental
+# WPL boat rental
 Boat rental website. Full stack project. 
