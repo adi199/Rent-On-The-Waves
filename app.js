@@ -7,6 +7,7 @@ var {Database} = require('./database');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var boatsRouter = require('./routes/boats');
 
 var app = express();
 var database = new Database();
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/boats', boatsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
