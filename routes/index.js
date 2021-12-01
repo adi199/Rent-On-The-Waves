@@ -16,6 +16,25 @@ router.get('/login', function(req, res, next) {
   res.render('login', { title: 'login' });
 });
 
+router.get('/landing', function(req, res, next) {
+  res.render('landing', { title: 'landing' });
+});
+
+router.post('/videos', function(req, res,next) {
+  collection.insert({
+  title: req.body.title,
+  genre: req.body.genre,
+  description: req.body.desc,
+  image: req.body.image
+  
+  
+  },function(err,video){
+  
+  if(err) throw err;
+  res.redirect('/');
+  });
+  });
+
 
 
 module.exports = router;
