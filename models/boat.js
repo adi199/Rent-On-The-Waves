@@ -4,12 +4,14 @@ const reviewHelper = require('../helper/ratingsHelper')
 const schema = mongoose.Schema({
     title : String,
     no_of_passengers : Number,
-    booking_options : [{hours : Number, price : Number}],
+    base_rate : String,
+    max_hours_available : Number,
     detail : String,
     captain_available : Boolean,
     owner : String,
-    reviews : [{name : String, rating : String, date : Date, review : String}],
+    avg_rating : String,
     location : String,
+    reviews : [{name : String, rating : String, date : Date, review : String}],
     specification : {
         year : String,
         make : String,
@@ -22,24 +24,23 @@ const schema = mongoose.Schema({
     allowed_on_boat : [String],
     cancellation_policy : [String],
     security_deposit : String,
-    captain_info : String
+    captain_info : String,
+    image : String
 });
 
-schema.virtual('avg_rating').get(async function(){
-    return await reviewHelper.getAvgRating(this._id);
+//Runs after each document saves
+schema.pre('save', async function(){
+
+    //Setting average rating
+    this.avg_rating = await reviewHelper.getAvgRating(this._id);
 });
 
-schema.virtual('hours').get(function(){
-    if(this.booking_options.length > 1){
-        this.booking_options.sort((a,b) => a.hours > b.hours ? 1 : -1);
-        return `${this.booking_options[0].hours}-${this.booking_options[this.booking_options.length-1].hours} Hours`;
-    }
-    return `${this.booking_options.hours} Hours`;
+schema.post('update', function(){
+    console.log(`Boat with ID ${this._id} updated.`);
 })
 
-schema.virtual('base_rate').get(function(){
-    this.booking_options.sort((a,b) => a.price > b.price ? 1 : -1);
-    return `${this.booking_options.price}/Hours`;
+schema.post('find', function(docs){
+    console.log(`Retrived ${docs.length} documents from boat collection.`);
 })
 
 const model = mongoose.model('boat', schema);

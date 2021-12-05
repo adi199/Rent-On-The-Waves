@@ -6,7 +6,13 @@ const schema = mongoose.Schema({
     last_name : String,
     email_id : String,
     password : String,
-    phone_no : Number
+    phone_no : Number,
+    cart : [{
+        boat : {type : mongoose.ObjectId, ref : 'boat'},
+        hours : String,
+        total_price : Number,
+        date : Date
+    }]
 });
 
 schema.methods.getName = function(){

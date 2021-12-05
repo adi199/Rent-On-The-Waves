@@ -4,7 +4,6 @@ module.exports = {
     fetchAll : async function(){
         try{
             let boats = await boatModel.find();
-            console.log(`Fetched ${boats.length} from boats collection.`);
             return boats;
         }catch(err){
             console.log("Error occured while fetching boats.\n", err);
@@ -14,6 +13,14 @@ module.exports = {
     fetch : async function(boatId){
         try{
             return await boatModel.find({_id : boatId});
+        }catch(err){
+            console.log(`Error occured while fetching boat with ID ${boatId}.\n`, err);
+        }
+        return null;
+    },
+    fetchByFilter : async function(filter){
+        try{
+            return await boatModel.find(filter);
         }catch(err){
             console.log(`Error occured while fetching boat with ID ${boatId}.\n`, err);
         }

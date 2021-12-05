@@ -16,7 +16,27 @@ var boatService = require('../service/boatService');
     }]
 */
 router.get('/', async function(req, res, next){
-    res.json(await boatService.getAllBoats());
+    try{
+        let boats = await boatService.getAllBoats()
+        res.render('boatsListing', {boats : boats});   
+    }catch(err){
+        res.status(400).json({
+            message : 'Failed to retrive Boats.',
+            errors : [err]
+        });
+    }
+});
+
+router.post('/', async function(req, res, next){
+    try{
+        let boats = await boatService.getBoats(req.body);
+        res.json(boats);
+    }catch(err){
+        res.status(400).json({
+            message : 'Failed to retrive Boats.',
+            errors : [err]
+        });
+    }
 });
 
 /*
@@ -47,7 +67,35 @@ router.get('/', async function(req, res, next){
     }
 */
 router.post('/add', async function(req, res,next){
-    res.json(await boatService.addBoat(req.body))
+    let data = req.body;
+    data['image'] = req.files[0].originalname;
+    data['specification'] = {
+        year : data.year,
+        make : data.make,
+        capacity : data.capacity,
+        boat_type : data.boat_type,
+        model : data.model,
+        length : data.length
+    }
+    delete data['year']
+    delete data['make']
+    delete data['capacity']
+    delete data['boat_type']
+    delete data['model']
+    delete data['length']
+    res.json(await boatService.addBoat(data));
+});
+
+router.get('/add', function(req, res,next){
+    res.render('addNewBoat');
+})
+
+router.get('/:boatId/detail',  async function(req,res,next){
+    let boat = await boatService.getBoat(req.params.boatId);
+    if(!boat){
+        return res.status(400).json({errors : 'Incorrect boat Id.'});
+    }
+    res.render('boatDetail', {boat : boat[0]});
 })
 
 module.exports = router;

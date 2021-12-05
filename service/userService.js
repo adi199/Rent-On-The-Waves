@@ -21,5 +21,24 @@ module.exports = {
             return true;
         }
         return false;
+    },
+    addToCart : async function(item, emailId){
+        let user = await userDao.findByEmailId(emailId);
+        user.cart.push(item);
+        user.save();
+    },
+    clearCart : async function(item, emailId){
+        let user = await userDao.findByEmailId(emailId);
+        user.cart = [];
+        user.save();
+    },
+    deleteFromCart : async function(item, emailId){
+        let user = await userDao.findByEmailId(emailId);
+        for(var i=0;i<user.cart.length;i++){
+            if(user.cart[i].boat == item.boat){
+                user.cart.splice(i, 1);
+            }
+        }
+        user.save();
     }
 }

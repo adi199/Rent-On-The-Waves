@@ -1,0 +1,8 @@
+html, body{
+    height: 100%;
+}
+
+#addNewBoatForm{
+    padding: 5%;
+    background-color: #ecfffb;
+}
