@@ -26,6 +26,7 @@ const schema = mongoose.Schema({
     security_deposit : String,
     captain_info : String,
     image : String,
+    booked_dates : [],
     deleted : {
         type : Boolean,
         default : false

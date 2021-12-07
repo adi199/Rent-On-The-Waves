@@ -58,7 +58,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title"><%= boat.title %></h5>
                                             <p class="card-text">
-                                                <%= boat.captain ? 'Captained' : 'No Captain' %> <br>
+                                                <%= boat.captain_available ? 'Captained' : 'No Captain' %> <br>
                                                 Up to <%= boat.no_of_passengers %> passengers <br>
                                                 <%= boat.location %>
                                             </p>
@@ -72,6 +72,18 @@
                                 </div>
                             <% }) %>
                         </div>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-5 justify-content-center">
+                    <div class="col-2"></div>
+                    <div class="col-lg-1">
+                        <button type="button" id="previousPageButton">Prev</button>
+                    </div>
+                    <div class="col-lg-1">
+                        <p id="pageNo">Page</p>
+                    </div>
+                    <div class="col-lg-1">
+                        <button type="button" id="previousPageButton">Next</button>
                     </div>
                 </div>
             </div>

@@ -38,7 +38,7 @@ sessionStore.on('error', function(error) {
 app.use(require('express-session')({
   secret: 'This is a secret',
   cookie: {
-    maxAge: 600000 // 10 mins
+    maxAge: 6000000 // 10 mins
   },
   store: sessionStore,
   resave: true,

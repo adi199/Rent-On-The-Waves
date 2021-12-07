@@ -15,6 +15,16 @@
         </li>
       </ul>
     </div>
-    <small class="text-light">Sign out</small>
+    <button type="button" class="bg-dark text-light" onclick="signOut()">Sign out</button>
   </div>
 </nav>
+<script>
+  function signOut(){
+    $.get({
+      url : 'http://localhost:3000/signout',
+      success : function(res){
+        window.location.href = "http://localhost:3000/login"
+      }
+    })
+}
+</script>

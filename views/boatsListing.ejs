@@ -53,13 +53,14 @@
                         <div id="listingPanel" class="row row-cols-1 row-cols-md-3 g-4">
                             <% boats.forEach(function(boat){ %>
                                 <div class="col">
-                                    <div id="<%= boat._id %>"" class="card h-100">
+                                    <div id="<%= boat._id %>" class="card h-100">
                                         <img src="/images/<%= boat.image %>" style="height : 18rem;" class="card-img-top" />
                                         <div class="card-body">
                                             <h5 class="card-title"><%= boat.title %></h5>
                                             <p class="card-text">
-                                                <%= boat.captain ? 'Captained' : 'No Captain' %> <br>
-                                                Up to <%= boat.no_of_passengers %> passengers
+                                                <%= boat.captain_available ? 'Captained' : 'No Captain' %> <br>
+                                                Up to <%= boat.no_of_passengers %> passengers <br>
+                                                <%= boat.location %>
                                             </p>
                                         </div>
                                         <div class="card-footer">

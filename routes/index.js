@@ -36,4 +36,9 @@ router.post('/login', async function(req, res, next) {
     });
 })
 
+router.get('/signout', function(req,res,next){
+  req.session.destroy();
+  res.json("Signed out")
+})
+
 module.exports = router;

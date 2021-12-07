@@ -5,7 +5,7 @@ module.exports = {
         let newBooking = new bookingModel(booking);
         await newBooking.save();
     },
-    async findAll(){
-        return await bookingModel.find();
+    async findAll(userId){
+        return await bookingModel.find({user : userId});
     }
 }

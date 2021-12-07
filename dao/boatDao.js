@@ -20,6 +20,7 @@ module.exports = {
     },
     fetchByFilter : async function(filter){
         try{
+            console.log(filter)
             return await boatModel.find(filter);
         }catch(err){
             console.log(`Error occured while fetching boat with ID ${boatId}.\n`, err);

@@ -10,9 +10,9 @@ let getCard = (data) => {
                     <div class="card-body">
                         <h5 class="card-title">${data.title}</h5>
                         <p class="card-text">
-                            ${data._id ? 'Captained' : 'No Captain'} <br>
+                            ${data.captain_available ? 'Captained' : 'No Captain'} <br>
                             Up to ${data.no_of_passengers} passengers <br>
-                            <%= boat.location %>
+                            ${data.location}
                         </p>
                     </div>
                     <div class="card-footer">
@@ -44,11 +44,8 @@ $(document).ready(function(){
     //Search form on Submit event
     $('#searchForm').submit(function(e){
         let filter = {
-            $or : [
-                {title : {$regex : $("input[id='searchInput']").val()}},
-                {location : {$regex : $("input[id='searchInput']").val()}},
-                {deleted : false}
-            ]
+            location : {$regex : $("input[id='searchInput']").val()},
+            deleted : false
         }
         getData(filter, function(boats){
             refreshListingPanel(boats);
@@ -61,7 +58,7 @@ $(document).ready(function(){
         try{
             let filter = {
                 captain_available : $("input[name='captainAvailableFilter']:checked").val(),
-                no_of_passengers : { $lte : $('#numberOfPassengersFilter').val()},
+                no_of_passengers : { $lt : $('#numberOfPassengersFilter').val()},
                 deleted : false
             }
             getData(filter, function(boats){

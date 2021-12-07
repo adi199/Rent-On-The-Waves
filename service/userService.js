@@ -1,6 +1,9 @@
 const userDao = require('../dao/userDao')
 
 module.exports = {
+    fetchUser : async function(email){
+        return await userDao.findByEmailId(email);
+    },
     isUserExisting : async function(email, password) {
         let user = await userDao.findUserByEmailAndPassword(email, password);
         return user != null;
