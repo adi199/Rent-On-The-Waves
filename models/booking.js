@@ -14,6 +14,7 @@ const schema = mongoose.Schema({
 //Runs after each document saves
 schema.pre('save', async function(){
     this.total_cost = this.base_rate*this.hours;
+    console.log((new Date()).toLocaleDateString("en-US"))
     // this.date = (new Date()).toLocaleDateString("en-US");
 });
 

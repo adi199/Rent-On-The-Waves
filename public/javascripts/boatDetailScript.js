@@ -1,13 +1,4 @@
 $(document).ready(function(){
-    console.log("HERE")
-    console.log($('#disabledDates').text())
-    let array = $('#disabledDates').text().split(',');
-    $('#bookingDate').datepicker({
-        'startDate' : new Date(),
-        beforeShowDay: function(date){
-            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-            return [ array.indexOf(string) == -1 ]
-        }
     });
     $('#bookBoatButton').click(function(e){
         $('#bookingModal').modal('show');
