@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    $('#bookingDate').datepicker({
+        'startDate' : new Date()
     });
     $('#bookBoatButton').click(function(e){
         $('#bookingModal').modal('show');

@@ -4,7 +4,7 @@ const reviewHelper = require('../helper/ratingsHelper')
 const schema = mongoose.Schema({
     user : String,
     boat : String,
-    start_time : Date,
+    start_time : String,
     hours : Number,
     date : Date,
     base_rate : Number,
@@ -14,8 +14,7 @@ const schema = mongoose.Schema({
 //Runs after each document saves
 schema.pre('save', async function(){
     this.total_cost = this.base_rate*this.hours;
-    console.log((new Date()).toLocaleDateString("en-US"))
-    // this.date = (new Date()).toLocaleDateString("en-US");
+    this.date = (new Date()).toLocaleDateString("en-US");
 });
 
 schema.post('save', async function(){
