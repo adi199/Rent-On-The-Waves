@@ -1,16 +1,17 @@
 const {userModel} = require('../models/user');
+const bcrypt = require('bcrypt');
+const { NotExtended } = require('http-errors');
 
 module.exports = {
-    findUserByEmailAndPassword : async function(targetEmail, targetPassword) {
-        userModel.findOne({ email_id : targetEmail , password : targetPassword})
-            .then((result) => {
-                console.log(result);
-                return result;
-            })
-            .catch((err) => {
-                console.log("Error occurred while fetching the user records.\n", err);
-                return NaN;
-            })
+    findUserByEmailAndPassword : async function(email, password) {
+        let user = await userModel.findOne({ email_id : email});
+        if(user){
+            console.log(password);
+            if(await bcrypt.compare(password, user.password)){
+                return user;
+            }
+        }
+        return null;
     },
     save : async function(user) {
         try{

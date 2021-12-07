@@ -25,7 +25,11 @@ const schema = mongoose.Schema({
     cancellation_policy : [String],
     security_deposit : String,
     captain_info : String,
-    image : String
+    image : String,
+    deleted : {
+        type : Boolean,
+        default : false
+    }
 });
 
 //Runs after each document saves

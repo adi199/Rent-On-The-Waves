@@ -172,6 +172,16 @@
                         <div class="col-md-6">
                             <label for="bookingStartTime" class="form-label">Start Time</label>
                             <select id="bookingStartTime" class="form-select">
+                                <% for(var i=1;i<=boat.max_hoours_available;i++){ %>
+                                    <option value="<%= i %>"><%= i %>:00</option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="bookingStartTime" class="form-label">Start Time</label>
+                            <select id="bookingStartTime" class="form-select">
                                 <% let currentHour = (new Date()).getHours(); %>
                                 <% currentHour += 1; %>
                                 <% while(currentHour <= 22){ %>
@@ -180,6 +190,8 @@
                                 <% } %>
                             </select>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <label for="bookingDate" class="form-label">Date</label>
                             <input type="text" id="bookingDate">    

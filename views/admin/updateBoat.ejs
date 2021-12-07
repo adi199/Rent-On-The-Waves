@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Boats rental</title>
+    <link href="/stylesheets/updateBoatStyle.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <%- include ../navbar.ejs %>
+    <p id="metaPara" style="display: none;"><%= boat._id %></p>
+    <div class="contianer h-100">
+        <div class="row h-100 mt-4">
+            <div class="col-3"></div>
+            <div class="col">
+                <form id="updateBoatForm" class="shadow-lg">
+                    <!-- Title -->
+                    <div class="mb-3">
+                        <label class="form-label" for="title">Title</label>
+                        <input type="text" class="form-control" id="title" value="<%= boat.title %>">
+                    </div>
+                    <!-- Detail -->
+                    <div class="mb-3">
+                        <label class="form-label" for="detail">Detail</label>
+                        <textarea class="form-control" id="detail" rows="5"><%= boat.detail %></textarea>
+                    </div>
+                    <!-- Location -->
+                    <div class="mb-3">
+                        <label class="form-label" for="location">Location</label>
+                        <input type="text" class="form-control" id="location" value="<%= boat.location %>">
+                    </div>
+                    <!-- No of Passengers -->
+                    <div class="mb-3">
+                        <label class="form-label" for="no_of_passengers">No of Passengers</label>
+                        <input type="number" class="form-control" id="no_of_passengers" value="<%= boat.no_of_passengers %>" min="1">
+                    </div>
+                    <!-- Base Rate -->
+                    <div class="mb-3">
+                        <label class="form-label" for="base_rate">Base Rate</label>
+                        <input type="number" class="form-control" id="base_rate" value="<%= boat.base_rate %>">
+                    </div>
+                    <!-- Max Hours Available -->
+                    <div class="mb-3">
+                        <label class="form-label" for="max_hours_available">Max hours Available</label>
+                        <input type="number" class="form-control" id="max_hours_available" value="<%= boat.max_hours_available %>" min="1" max="8">
+                    </div>
+                    <!-- Captain Available -->
+                    <div class="row mb-3 ">
+                        <div class="col-4 align-self-center">
+                            <label class="form-label" for="captain_available">Captain Available</label>
+                        </div>
+                        <div class="col">
+                            <select class="selectpicker" id="captain_available">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Year -->
+                    <div class="mb-3">
+                        <label class="form-label" for="year">Year</label>
+                        <input type="number" class="form-control" id="year" value="<%= boat.specification.year %>">
+                    </div>
+                    <!-- Make -->
+                    <div class="mb-3">
+                        <label class="form-label" for="make">Make</label>
+                        <input type="text" class="form-control" id="make" value="<%= boat.specification.make %>">
+                    </div>
+                    <!-- Capacity -->
+                    <div class="mb-3">
+                        <label class="form-label" for="capacity">Capacity</label>
+                        <input type="number" class="form-control" id="capacity" value="<%= boat.specification.capacity %>" min="1">
+                    </div>
+                    <!-- Boat Type -->
+                    <div class="mb-3">
+                        <label class="form-label" for="boat_type">Boat Type</label>
+                        <input type="text" class="form-control" id="boat_type" value="<%= boat.specification.boat_type %>">
+                    </div>
+                    <!-- Model -->
+                    <div class="mb-3">
+                        <label class="form-label" for="model">Model</label>
+                        <input type="text" class="form-control" id="model" value="<%= boat.specification.model %>">
+                    </div>
+                    <!-- Length -->
+                    <div class="mb-3">
+                        <label class="form-label" for="length">Length</label>
+                        <input type="text" class="form-control" id="length" value="<%= boat.specification.length %>" min="1">
+                    </div>
+                    <!-- Features -->
+                    <div class="row mb-3 ">
+                        <div class="col-4 align-self-center">
+                            <label class="form-label" for="features">Features</label>
+                        </div>
+                        <div class="col">
+                            <select class="selectpicker" id="features" multiple="multiple">
+                                <% boat.features.forEach(function(feature){ %>
+                                    <option value="<%= feature %>" selected><%= feature %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Allowed On Boat -->
+                    <div class="row mb-3 ">
+                        <div class="col-4 align-self-center">
+                            <label class="form-label" for="allowed_on_boat" selected>Allowed On Boat</label>
+                        </div>
+                        <div class="col">
+                            <select class="selectpicker" id="allowed_on_boat" multiple="multiple">
+                                <% boat.allowed_on_boat.forEach(function(item){ %>
+                                    <option value="<%= item %>" selected><%= item %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Cancellation Policy -->
+                    <div class="row mb-3 ">
+                        <div class="col-4 align-self-center">
+                            <label class="form-label" for="cancellation_policy">Cancellation Policy</label>
+                        </div>
+                        <div class="col">
+                            <select class="selectpicker" id="cancellation_policy" multiple="multiple">
+                                <% boat.cancellation_policy.forEach(function(policy){ %>
+                                    <option value="<%= policy %>" selected><%= policy %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Security Deposit -->
+                    <div class="mb-3">
+                        <label class="form-label" for="security_deposit">Security Deposit</label>
+                        <textarea class="form-control" id="security_deposit" rows="5"><%= boat.security_deposit %></textarea>
+                    </div>
+                    <!-- Captain Info -->
+                    <div class="mb-3">
+                        <label class="form-label" for="captain_info">Captain Info</label>
+                        <textarea class="form-control" id="captain_info" rows="5"><%= boat.captain_info %></textarea>
+                    </div>
+                    <!-- Image -->
+                    <div class="mb-3">
+                        <label class="form-label" for="image">Upload Boat Image</label>
+                        <input type="file" class="form-control" id="image" />
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <button type="submit" id="updateButton" class="btn btn-primary btn-block mb-4">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+    <script src="/javascripts/adminUpdateBoatScript.js"></script>
+  </body>
+</html>

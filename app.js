@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var {Database} = require('./database');
+const session = require('express-session');
+const MongoConnect = require('connect-mongodb-session')(session);
+
 var multer = require('multer');
 const storage = multer.diskStorage({
   destination : function(req, file, cb){
@@ -23,6 +26,24 @@ var bookingsRouter = require('./routes/bookings');
 
 var app = express();
 var database = new Database();
+
+var sessionStore = new MongoConnect({
+  uri : 'mongodb+srv://admin:admin%40123456@boat-rental-cluster.sxpak.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+  collection : 'user_sessions'
+});
+sessionStore.on('error', function(error) {
+  console.log(error);
+});
+
+app.use(require('express-session')({
+  secret: 'This is a secret',
+  cookie: {
+    maxAge: 600000 // 10 mins
+  },
+  store: sessionStore,
+  resave: true,
+  saveUninitialized: true
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

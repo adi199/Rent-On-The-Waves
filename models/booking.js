@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const reviewHelper = require('../helper/ratingsHelper')
 
 const schema = mongoose.Schema({
-    owner : String,
     user : String,
     boat : String,
     start_time : Date,

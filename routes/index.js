@@ -1,10 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+var userService = require('../service/userService');
 
 /* GET home page. */
 router.get('/signup', function(req, res, next) {
@@ -16,25 +12,28 @@ router.get('/login', function(req, res, next) {
   res.render('login', { title: 'login' });
 });
 
-router.get('/landing', function(req, res, next) {
-  res.render('landing', { title: 'landing' });
-});
-
-router.post('/videos', function(req, res,next) {
-  collection.insert({
-  title: req.body.title,
-  genre: req.body.genre,
-  description: req.body.desc,
-  image: req.body.image
-  
-  
-  },function(err,video){
-  
-  if(err) throw err;
-  res.redirect('/');
-  });
-  });
-
-
+router.post('/login', async function(req, res, next) {
+  let session = req.session;
+  if(req.body.emailAddress === 'admin@boatrentals.com' && req.body.password === 'admin2021'){
+    session.emailId = 'admin@boatrentals.com';
+    session.password = 'admin2021'
+    return res.json({
+      isValidUser : true,
+      redirectUrl : '/boats/admin'
+    });
+  }
+  if(!(await userService.isUserExisting(req.body.emailAddress, req.body.password))){
+    return res.json({
+      isValidUser : false,
+      redirectUrl : ''
+    });
+  }
+  session.emailId = req.body.emailAddress;
+  session.password = req.body.password;
+  res.json({
+      isValidUser : true,
+      redirectUrl : '/boats'
+    });
+})
 
 module.exports = router;

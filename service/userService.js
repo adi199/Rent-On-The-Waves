@@ -1,8 +1,8 @@
 const userDao = require('../dao/userDao')
 
 module.exports = {
-    isUserExisting : function(email, password) {
-        let user = userDao.findUserByEmailAndPassword(email, password);
+    isUserExisting : async function(email, password) {
+        let user = await userDao.findUserByEmailAndPassword(email, password);
         return user != null;
     },
     addUser : async function(user) {

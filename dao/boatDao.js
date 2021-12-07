@@ -3,7 +3,7 @@ const {boatModel} = require('../models/boat');
 module.exports = {
     fetchAll : async function(){
         try{
-            let boats = await boatModel.find();
+            let boats = await boatModel.find({deleted : false});
             return boats;
         }catch(err){
             console.log("Error occured while fetching boats.\n", err);
@@ -39,7 +39,9 @@ module.exports = {
     },
     delete : async function(boatId){
         try{
-            await boatModel.deleteOne({'_id' : boatId});
+            let boat = await boatModel.findOne({'_id' : boatId});
+            boat.deleted = true;
+            boat.save();
             console.log(`Deleted boat with ID ${boatId}`);
             return true;
         }catch(err){
@@ -49,8 +51,7 @@ module.exports = {
     },
     update : async function(boatId, update){
         try{
-            let updatedBoat = await boatModel.updateOne({_id : boatId}, update);
-            console.log(`Updated boat with ID ${boatId}.`);
+            await boatModel.updateOne({_id : boatId}, update);
             return true;
         }catch(err){
             console.log("Error occured while updating the boat document.\n", err);

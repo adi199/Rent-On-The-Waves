@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const schema = mongoose.Schema({
     first_name : String,
@@ -18,6 +19,11 @@ const schema = mongoose.Schema({
 schema.methods.getName = function(){
     return `${this.first_name} ${this.middle_name} ${this.last_name}`;
 }
+
+schema.pre('save', async function(){
+    let salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+});
 
 const model = mongoose.model('user', schema);
 

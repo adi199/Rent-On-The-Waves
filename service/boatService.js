@@ -14,7 +14,6 @@ module.exports = {
     },
     addBoat : async function(boat){
         boat.captain_available = boat.captain_available === 'Yes';
-        console.log(boat)
         boat.features = boat.features.split(',');
         boat.allowed_on_boat = boat.allowed_on_boat.split(',');
         boat.cancellation_policy = boat.cancellation_policy.split(',');
@@ -24,6 +23,9 @@ module.exports = {
         return await dao.fetch(boatId) ? await dao.delete(boatId) : "Invalid Boat ID";
     },
     updateBoat : async function(boatId, update){
+        update.features = update.features.split(',');
+        update.allowed_on_boat = update.allowed_on_boat.split(',');
+        update.cancellation_policy = update.cancellation_policy.split(',');
         return await dao.fetch(boatId) ? await dao.update(boatId, update) : "Invalid Boat ID";
     }
 }

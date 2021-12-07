@@ -17,7 +17,6 @@ router.post('/book', async function(req,res,next){
         let data = req.body;
         let boat = await boatService.getBoat(data.boat);
         data['base_rate'] = boat.base_rate;
-        data['owner'] = boat.owner;
         await bookingService.addBooking(data);
         res.json("Done");
     }catch(err){
